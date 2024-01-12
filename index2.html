@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* general styles: b flex f-column m-item */
+        .b {
+            border: solid 1px;
+        }
+
+        .flex {
+            display: flex
+        }
+        .f-column{
+           flex-direction: column;
+        }
+
+        .m-item{
+            height:15px;
+            margin:10px;
+            padding:10px;
+        }
+        /* container: nav,content*/
+        .container {
+            
+        }
+        .nav{
+            background-color: #f1f1f1;
+            height: 60px;
+            justify-content: center;
+        }
+        .logo{
+            height: 30px;
+            width:50px;
+            margin:10px;
+        }
+        .name{
+            margin:20px;
+        }
+        /* content: sidebar,main*/
+        .content{
+            height:350px;
+            width:500px;
+        }
+        
+
+        .sidebar{
+           background-color: aliceblue;
+           margin:10px;
+           justify-content: center;
+        }
+        .main{}
+
+        .manu{
+            height:50px;
+            background-color: aliceblue;
+            margin:10px;
+            justify-content: center;
+        }
+
+        .content-panel{
+            height:300px;
+            background-color: aliceblue;
+        }
+
+       
+       
+    </style>
+</head>
+
+<body>
+    <div class="b flex f-column container">
+        <div class="b flex nav">
+            <img class="logo" src="https://images.wondershare.com/ailab/image2023/products/head-swap-after.png" />
+            <span class="name">Haige's Website</span>
+        </div>
+        <div class="b flex main">
+            <div class="b flex f-column sidebar">
+                <div class="b m-item">Service1</div>
+                <div class="b m-item">Service2</div>
+                <div class="b m-item">Service3</div>
+                <div class="b m-item">Service4</div>
+                <div class="b m-item">Service5</div>
+            </div>
+            <div class="b flex f-column content">
+                <div class="b flex manu">
+                    <div class="b m-item">Info</div>
+                    <div class="b m-item">work</div>
+                    <div class="b m-item">Education</div>
+                    <div class="b m-item">Training</div>
+                    <div class="b m-item">Skills</div>
+        
+                </div>
+                <div class="b content-panel">some content</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
