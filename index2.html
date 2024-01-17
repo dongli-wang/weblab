@@ -6,39 +6,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        /* general styles: b flex f-column m-item */
+        /* general styles: b flex f-column */
         .b {
             border: solid 0px;
         }
-
+  
         .flex {
             display: flex
         }
+
         .f-column{
            flex-direction: column;
         }
 
-        .m-item{
-            background-color: #f1f1f1;
-            height:15px;
-            padding:10px;
-            flex:1
-        }
-        .m5{
+        .m-lr5{
            margin-left : 5px;
            margin-right: 5px;
         }
-        /* container: nav,content*/
-        .container {
-            
+        .m-top50{
+            margin-top:50px;
         }
-        .nav{
-            background-color: #f1f1f1;
-            height: 60px;
-            justify-content: center;
+
+        .m0{
+            margin:0px;
+        }
+
+        .m-lr10{
             margin-left:10px;
             margin-right:10px;
         }
+
+        .fjc-center{
+            justify-content: center;
+        }
+
+        .bg-c-grey{
+            background-color: #f1f1f1;
+        }
+
+
+
+        /*special sytles*/
+        .body{
+         
+        }
+        /* container: nav,content*/
+        .container {
+           
+        }
+        .nav{
+            height:60px;
+        }
+
         .logo{
             height: 30px;
             width:50px;
@@ -60,6 +79,7 @@
            justify-content: center;
            flex:1;
         }
+
         .main{
             width:500px
         }
@@ -71,6 +91,12 @@
             margin-right:10px;
             justify-content: center;
         }
+        .m-item{
+            background-color: #f1f1f1;
+            height:15px;
+            padding:10px;
+            flex:1
+        }
 
         .content-panel{
             background-color: aliceblue;
@@ -78,13 +104,37 @@
             margin-right:10px;
             flex:1
         }
-
+        
+        #content1{
+            display:flex;
+        }
+        #content2{
+            display:none;
+        }
+        #content3{
+            display:none;
+        }
+        #content4{
+            display:none;
+        }
+        #content5{
+            display:none;
+        }
        
        
     </style>
     <script>
+        function showService(n){
+            document.getElementById("content"+n).style.display = "flex";
+            for(i=1;i<=5;i++){
+                if(i!=n){
+                    document.getElementById("content"+i).style.display = "none";
+                }
+            }
+        }
         function showContent(n){
            let c = document.getElementById("contentPanel");
+           //console.log("c->"+c);
            let content = [
               "<h1> Peronal information .... </h1>",
               "<h1> work information .... </h1>",
@@ -114,34 +164,72 @@
     </script>
 </head>
 
-<body class="flex" style="margin:0px">
-    <div class="b flex f-column container">
-        <div class="b flex nav">
+<body class="flex m0 fjc-center" >
+    <div class="b flex f-column m-top50">
+        <div class="b flex fjc-center bg-c-grey"
+            style="height:60px">
             <img class="logo" src="https://images.wondershare.com/ailab/image2023/products/head-swap-after.png" />
             <span class="name">Haige's Website</span>
         </div>
         <div class="b flex main">
             <div class="b flex f-column sidebar">
-                <div class="b m-item">Service1</div>
-                <div class="b m-item">Service2</div>
-                <div class="b m-item">Service3</div>
-                <div class="b m-item">Service4</div>
-                <div class="b m-item">Service5</div>
+                <div class="b m-item" onclick="showService(1)">Service1</div>
+                <div class="b m-item" onclick="showService(2)">Service2</div>
+                <div class="b m-item" onclick="showService(3)">Service3</div>
+                <div class="b m-item" onclick="showService(4)">Service4</div>
+                <div class="b m-item" onclick="showService(5)">Service5</div>
             </div>
-            <div class="b flex f-column content">
+            <div id="content1" class="b flex f-column content">
                 <div class="b flex manu" >
                     <div  class="b m-item" 
                          onclick="showContent(1)"
                          onmouseenter="style='background-color:red'"
                          onmouseleave="style='background-color:white'">Info</div>
-                    <div   class="b m-item m5" onclick="showContent(2)">work</div>
+                    <div   class="b m-item m-lr5" onclick="showContent(2)">work</div>
                     <!-- tell brower to invoke the function ShowContent when user clike the work Div-->
-                    <div  class="b m-item m5" onclick="showContent(3)">Education</div>
-                    <div  class="b m-item m5" onclick="showContent(4)">Training</div>
+                    <div  class="b m-item m-lr5" onclick="showContent(3)">Education</div>
+                    <div  class="b m-item m-lr5" onclick="showContent(4)">Training</div>
                     <div  class="b m-item" onclick="showContent(5)">Skills</div>
         
                 </div>
-                <div id="contentPanel" class="b content-panel">some content</div>
+                <div class="b content-panel">some content</div>
+            </div>
+            <div id="content2" class="b flex f-column content">
+                <div class="b flex manu" >
+                    <div  class="b m-item" 
+                         onclick="showContent(1)"
+                         onmouseenter="style='background-color:red'"
+                         onmouseleave="style='background-color:white'">ABC</div>
+                    <div   class="b m-item m5" onclick="showContent(2)">Tech</div>
+                    <!-- tell brower to invoke the function ShowContent when user clike the work Div-->
+                    <div  class="b m-item m5" onclick="showContent(3)">Work flow</div>
+    
+                </div>
+                <div  class="b content-panel">some content</div>
+            </div>
+            <div class="b flex f-column content" id="content3">
+                <div class="b flex manu">
+                    <div class="b m-item">abc</div>
+                    <div class="b m-item">xyz</div>
+                    <div class="b m-item">mnt</div>
+                </div>
+                <div  class="b content-panel">some content</div>
+            </div>
+            <div class="b flex f-column content" id="content4">
+                <div class="b flex manu">
+                    <div class="b m-item">xxx</div>
+                    <div class="b m-item">yyy</div>
+                    <div class="b m-item">mmm</div>
+                </div>
+                <div  class="b content-panel">some content</div>
+            </div>
+            <div class="b flex f-column content" id="content5">
+                <div class="b flex manu">
+                    <div class="b m-item">111</div>
+                    <div class="b m-item">222</div>
+                    <div class="b m-item">333</div>
+                </div>
+                <div  class="b content-panel">some content</div>
             </div>
         </div>
     </div>
