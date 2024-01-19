@@ -1,0 +1,89 @@
+.my-green-button {
+    border: 2px solid #48bb78;
+    /* 绿色边框 */
+    color: #48bb78;
+    /* 绿色文字 */
+    padding: 0.5rem 1rem;
+    /* 内边距 */
+    border-radius: 0.25rem;
+    /* 圆角 */
+    transition: background-color 0.3s, color 0.3s;
+    /* 平滑过渡效果 */
+}
+
+.my-green-button:hover {
+    background-color: #48bb78;
+    /* 悬停时的背景颜色 */
+    color: #ffffff;
+    /* 悬停时的文字颜色 */
+}
+
+.button-style {
+    background-color: #5e81ac;
+    /* 柔和的蓝色 */
+    border: none;
+    border-radius: 20px;
+    /* 流体形状 */
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    /* 平滑过渡效果 */
+}
+
+.button-style:hover {
+    background-color: #4c6a88;
+    /* 悬停时颜色加深 */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    /* 微互动效果 */
+}
+
+.interactive-button {
+    background: linear-gradient(45deg, #ffafbd, #ffc3a0);
+    /* 渐变背景 */
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    /* 圆角边缘 */
+    padding: 10px 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    /* 过渡效果 */
+}
+
+.interactive-button:hover {
+    transform: scale(1.05);
+    /* 悬停时放大 */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    /* 阴影效果 */
+}
+
+.cartoon-button {
+    background-color: #ffcc00;
+    /* 鲜艳的背景色 */
+    color: #fff;
+    border: 2px solid #000000;
+    padding: 10px 20px;
+    border-radius: 8px;
+    /* 轻微的圆角 */
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    /* 文本大写 */
+    cursor: pointer;
+    box-shadow: 3px 3px 0 #000000;
+    /* 轻微的阴影，增加立体感 */
+    transition: all 0.2s ease-in-out;
+}
+
+.cartoon-button:hover {
+    background-color: #e6b800;
+    /* 悬停时的背景色变化 */
+    transform: translate(2px, -2px);
+    /* 悬停时轻微的移动效果 */
+    box-shadow: 5px 5px 0 #000000;
+}

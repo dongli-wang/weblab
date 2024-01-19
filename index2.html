@@ -6,206 +6,255 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        /* general styles: b flex f-column */
+    
+        /*special sytles*/
+        .body {}
+
+        /* container: nav,content*/
+        .container {}
+
+        .nav {
+            height: 60px;
+        }
+
+        .logo {
+            height: 30px;
+            width: 50px;
+            margin: 10px;
+        }
+
+        .name {
+            margin: 20px;
+        }
+
+        /* content: sidebar,main*/
+        .content {
+            margin-top: 10px;
+            flex: 4;
+        }
+
+
+        .sidebar {
+            background-color: aliceblue;
+            margin: 10px;
+            justify-content: center;
+            flex: 1;
+        }
+
+        .main {
+            width: 500px
+        }
+
+        .manu {
+            height: 35px;
+            background-color: aliceblue;
+            margin-left: 10px;
+            margin-right: 10px;
+            justify-content: center;
+        }
+
+        .m-item {
+            background-color: #f1f1f1;
+            height: 15px;
+            padding: 10px;
+            flex: 1
+        }
+
+        .content-panel {
+            background-color: aliceblue;
+            margin-left: 10px;
+            margin-right: 10px;
+            flex: 1
+        }
+
+        #content1 {
+            display: flex;
+        }
+
+        #content2 {
+            display: none;
+        }
+
+        #content3 {
+            display: none;
+        }
+
+        #content4 {
+            display: none;
+        }
+
+        #content5 {
+            display: none;
+        }
+        
+        /* utility class - we have a small utility class lib */
+        .bg-blue-500{
+            background-color: #4299e1;
+        }
+        .bg-grey{
+            background-color: #f1f1f1;
+        }
+
+        .text-white{
+            color: #ffffff;
+        }
+        
+        .text-lemonchiffon{
+            color:lemonchiffon
+        }
+
+        .font-bold{
+            font-weight: bold;
+        }
+
+        .py-2{
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .px-4{
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .rounded{
+            border-radius: 1rem;
+        } 
+
+        .transition-color{
+            transition: background-color 0.3s;
+        }
+        
+        .hover\:bg-blue-700:hover{
+            background-color: #2b6cb0;
+            /* Tailwind 'blue-700' */
+        }
+        
         .b {
             border: solid 0px;
         }
-  
+
         .flex {
             display: flex
         }
 
-        .f-column{
-           flex-direction: column;
+        .f-column {
+            flex-direction: column;
         }
 
-        .m-lr5{
-           margin-left : 5px;
-           margin-right: 5px;
-        }
-        .m-top50{
-            margin-top:50px;
+        .mx5 {
+            margin-left: 5px;
+            margin-right: 5px;
         }
 
-        .m0{
-            margin:0px;
+        .m-top50 {
+            margin-top: 50px;
         }
 
-        .m-lr10{
-            margin-left:10px;
-            margin-right:10px;
+        .m-top5 {
+            margin-top: 5px;
         }
 
-        .fjc-center{
+        .m0 {
+            margin: 0px;
+        }
+
+        .mx10 {
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        .fjc-center {
             justify-content: center;
         }
 
-        .bg-c-grey{
-            background-color: #f1f1f1;
-        }
-
-
-
-        /*special sytles*/
-        .body{
-         
-        }
-        /* container: nav,content*/
-        .container {
-           
-        }
-        .nav{
-            height:60px;
-        }
-
-        .logo{
-            height: 30px;
-            width:50px;
-            margin:10px;
-        }
-        .name{
-            margin:20px;
-        }
-        /* content: sidebar,main*/
-        .content{
-            margin-top: 10px;
-            flex:4;
-        }
-        
-
-        .sidebar{
-           background-color: aliceblue;
-           margin:10px;
-           justify-content: center;
-           flex:1;
-        }
-
-        .main{
-            width:500px
-        }
-
-        .manu{
-            height:35px;
-            background-color:aliceblue;
-            margin-left:10px;
-            margin-right:10px;
-            justify-content: center;
-        }
-        .m-item{
-            background-color: #f1f1f1;
-            height:15px;
-            padding:10px;
-            flex:1
-        }
-
-        .content-panel{
-            background-color: aliceblue;
-            margin-left:10px;
-            margin-right:10px;
-            flex:1
-        }
-        
-        #content1{
-            display:flex;
-        }
-        #content2{
-            display:none;
-        }
-        #content3{
-            display:none;
-        }
-        #content4{
-            display:none;
-        }
-        #content5{
-            display:none;
-        }
        
-       
+
     </style>
     <script>
-        function showService(n){
-            document.getElementById("content"+n).style.display = "flex";
-            for(i=1;i<=5;i++){
-                if(i!=n){
-                    document.getElementById("content"+i).style.display = "none";
+        function showService(n) {
+            document.getElementById("content" + n).style.display = "flex";
+            for (i = 1; i <= 5; i++) {
+                if (i != n) {
+                    document.getElementById("content" + i).style.display = "none";
                 }
             }
         }
-        function showContent(n){
-           let c = document.getElementById("contentPanel");
-           //console.log("c->"+c);
-           let content = [
-              "<h1> Peronal information .... </h1>",
-              "<h1> work information .... </h1>",
-              "<h1> My Education .... </h1>",
-              "<h1> Some Training .... </h1>",
-              "<h1> My work skills  .... </h1>"
-           ];
-           // the Array index start from 0
-           // verify the parameter n (1-5)
-           if(n>=1 & n<=5){
-              c.innerHTML = content[n-1];
-           }else{
-              c.innerHTML = "out of range!";
-           }
-        //    if(n==1){
-        //       c.innerHTML = "...";
-        //    }else if(n==2){
-        //       c.innerHTML = "...";
-        //    }else if(n==3){
-        //       c.innerHTML = "...";
-        //    }else if(n==4){
-        //       c.innerHTML = "...";
-        //    }else if(n==5){
-        //       c.innerHTML = "...";
-        //    }
+        function showContent(n) {
+            let c = document.getElementById("contentPanel");
+            //console.log("c->"+c);
+            let content = [
+                "<h1> Peronal information .... </h1>",
+                "<h1> work information .... </h1>",
+                "<h1> My Education .... </h1>",
+                "<h1> Some Training .... </h1>",
+                "<h1> My work skills  .... </h1>"
+            ];
+            // the Array index start from 0
+            // verify the parameter n (1-5)
+            if (n >= 1 & n <= 5) {
+                c.innerHTML = content[n - 1];
+            } else {
+                c.innerHTML = "out of range!";
+            }
+            //    if(n==1){
+            //       c.innerHTML = "...";
+            //    }else if(n==2){
+            //       c.innerHTML = "...";
+            //    }else if(n==3){
+            //       c.innerHTML = "...";
+            //    }else if(n==4){
+            //       c.innerHTML = "...";
+            //    }else if(n==5){
+            //       c.innerHTML = "...";
+            //    }
         }
     </script>
 </head>
 
-<body class="flex m0 fjc-center" >
+<body class="flex m0 fjc-center">
     <div class="b flex f-column m-top50">
-        <div class="b flex fjc-center bg-c-grey"
-            style="height:60px">
+        <div class="b flex fjc-center bg-c-grey" style="height:60px">
             <img class="logo" src="https://images.wondershare.com/ailab/image2023/products/head-swap-after.png" />
             <span class="name">Haige's Website</span>
         </div>
         <div class="b flex main">
             <div class="b flex f-column sidebar">
-                <div class="b m-item" onclick="showService(1)">Service1</div>
-                <div class="b m-item" onclick="showService(2)">Service2</div>
-                <div class="b m-item" onclick="showService(3)">Service3</div>
-                <div class="b m-item" onclick="showService(4)">Service4</div>
-                <div class="b m-item" onclick="showService(5)">Service5</div>
+                <div class="b m-item bg-blue-500 text-white font-bold px-4 py-2 
+                                     rounded transition-color hover:bg-blue-700"
+                    onclick="showService(1)">Service1</div>
+                <div class="b m-item m-top5 bg-blue-500 text-white font-bold px-4 py-2 
+                rounded transition-color hover:bg-blue-700" onclick="showService(2)">Service2</div>
+                <div class="b m-item m-top5 bg-blue-500 text-lemonchiffon font-bold px-4 py-2 
+                rounded transition-color hover:bg-blue-700" onclick="showService(3)">Service3</div>
+                <div class="b m-item m-top5 bg-blue-500 text-white font-bold px-4 py-2 
+                rounded transition-color hover:bg-blue-700" onclick="showService(4)">Service4</div>
+                <div class="b m-item m-top5 bg-blue-500 text-white font-bold px-4 py-2 
+                rounded transition-color hover:bg-blue-700" onclick="showService(5)">Service5</div>
             </div>
             <div id="content1" class="b flex f-column content">
-                <div class="b flex manu" >
-                    <div  class="b m-item" 
-                         onclick="showContent(1)"
-                         onmouseenter="style='background-color:red'"
-                         onmouseleave="style='background-color:white'">Info</div>
-                    <div   class="b m-item m-lr5" onclick="showContent(2)">work</div>
+                <div class="b flex manu">
+                    <div class="b m-item" onclick="showContent(1)" onmouseenter="style='background-color:red'"
+                        onmouseleave="style='background-color:white'">Info</div>
+                    <div class="b m-item mx5 cartoon-button" onclick="showContent(2)">work</div>
                     <!-- tell brower to invoke the function ShowContent when user clike the work Div-->
-                    <div  class="b m-item m-lr5" onclick="showContent(3)">Education</div>
-                    <div  class="b m-item m-lr5" onclick="showContent(4)">Training</div>
-                    <div  class="b m-item" onclick="showContent(5)">Skills</div>
-        
+                    <div class="b m-item mx5 my-green-button" onclick="showContent(3)">Education</div>
+                    <div class="b m-item mx5 button-style" onclick="showContent(4)">Training</div>
+                    <div class="b m-item interactive-button" onclick="showContent(5)">Skills</div>
+
                 </div>
                 <div id="contentPanel" class="b content-panel">some content</div>
             </div>
             <div id="content2" class="b flex f-column content">
-                <div class="b flex manu" >
-                    <div  class="b m-item" 
-                         onclick="showContent(1)"
-                         onmouseenter="style='background-color:red'"
-                         onmouseleave="style='background-color:white'">ABC</div>
-                    <div   class="b m-item m5" onclick="showContent(2)">Tech</div>
+                <div class="b flex manu">
+                    <div class="b m-item" onclick="showContent(1)" onmouseenter="style='background-color:red'"
+                        onmouseleave="style='background-color:white'">ABC</div>
+                    <div class="b m-item m5" onclick="showContent(2)">Tech</div>
                     <!-- tell brower to invoke the function ShowContent when user clike the work Div-->
-                    <div  class="b m-item m5" onclick="showContent(3)">Work flow</div>
-    
+                    <div class="b m-item m5" onclick="showContent(3)">Work flow</div>
+
                 </div>
-                <div  class="b content-panel">some content</div>
+                <div class="b content-panel">some content</div>
             </div>
             <div class="b flex f-column content" id="content3">
                 <div class="b flex manu">
@@ -213,7 +262,7 @@
                     <div class="b m-item">xyz</div>
                     <div class="b m-item">mnt</div>
                 </div>
-                <div  class="b content-panel">some content</div>
+                <div class="b content-panel">some content</div>
             </div>
             <div class="b flex f-column content" id="content4">
                 <div class="b flex manu">
@@ -221,7 +270,7 @@
                     <div class="b m-item">yyy</div>
                     <div class="b m-item">mmm</div>
                 </div>
-                <div  class="b content-panel">some content</div>
+                <div class="b content-panel">some content</div>
             </div>
             <div class="b flex f-column content" id="content5">
                 <div class="b flex manu">
@@ -229,10 +278,10 @@
                     <div class="b m-item">222</div>
                     <div class="b m-item">333</div>
                 </div>
-                <div  class="b content-panel">some content</div>
+                <div class="b content-panel">some content</div>
             </div>
         </div>
     </div>
 </body>
 
-</html> 
+</html>
