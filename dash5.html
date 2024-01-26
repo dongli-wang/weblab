@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complex Dashboard with Tailwind CSS</title>
+    <title>Enhanced Dashboard with Tailwind CSS</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body class="bg-gray-100">
     <div class="flex h-screen overflow-hidden">
         <!-- Sidebar -->
@@ -31,17 +33,14 @@
         </div>
 
         <!-- Main content -->
-        <div class="flex-1 flex flex-col  ">
+        <div class="flex-1 flex flex-col overflow-y-auto">
             <!-- Header -->
             <div class="bg-white shadow p-4 flex justify-between items-center">
                 <h2 class="text-2xl font-semibold">Dashboard Overview</h2>
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    New Report
-                </button>
             </div>
 
             <!-- Content -->
-            <div class="p-4 overflow-y-auto" >
+            <div class="p-4">
                 <!-- Statistics Cards -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                     <!-- Card 1 -->
@@ -67,6 +66,18 @@
                         <h4 class="font-semibold text-lg">Growth</h4>
                         <p>3.4%</p>
                     </div>
+                </div>
+
+                <!-- New Report Form -->
+                <div class="bg-white p-4 rounded-lg shadow mb-4">
+                    <h4 class="font-semibold text-lg mb-2">Create New Report</h4>
+                    <form id="newReportForm">
+                        <input type="text" id="reportName" placeholder="Report Name" class="border p-2 rounded mr-2">
+                        <button type="submit"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Create
+                        </button>
+                    </form>
                 </div>
 
                 <!-- Chart Container -->
@@ -103,16 +114,29 @@
     </div>
 
     <script>
+        let salesChart; // 全局变量来存储图表实例
+
         // Mock 数据更新
-        function updateData() {
-            document.getElementById('userCount').innerText = 'Users: ' + Math.floor(Math.random() * 10000);
+        function createSalesChartData() {
+            // let n = Math.floor(Math.random() * 10000);
+            // console.log("updateData->"+n);
+            // document.getElementById('userCount').innerText = 'Users: ' + n;
             return Array.from({ length: 6 }, () => Math.floor(Math.random() * 20000));
         }
 
         // 初始化图表
         function initChart(salesData) {
-            new Chart(document.getElementById('salesChart'), {
-                type: 'line',
+            
+            const ctx = document.getElementById('salesChart').getContext('2d');
+
+            // 销毁已存在的图表实例
+            if (salesChart) {
+                salesChart.destroy();
+            }
+
+            // 创建新的图表实例
+            salesChart = new Chart(document.getElementById('salesChart'), {
+                type: 'bar',
                 data: {
                     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
                     datasets: [{
@@ -133,18 +157,62 @@
             });
         }
 
-        // 加载数据并更新图表
-        // Arrow function
+        
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const salesData = updateData();
-            initChart(salesData);
-
-            // 每隔5秒更新用户数据
-            setInterval(() => {
-                updateData();
-            }, 5000);
+        // 处理新报告的创建
+        document.getElementById('newReportForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const reportName = document.getElementById('reportName').value;
+            if (reportName) {
+                // 在这里处理报告的创建逻辑
+                // 例如，保存到 localStorage
+                localStorage.setItem('newReport', reportName);
+                alert('New report created: ' + reportName);
+                document.getElementById('reportName').value = ''; // 清空输入框
+            }
         });
+
+        // 模拟数据的加载和更新
+        function loadData() {
+            const storedUsers = localStorage.getItem('userCount');
+            const users = storedUsers ? parseInt(storedUsers) : Math.floor(Math.random() * 10000);
+            document.getElementById('userCount').innerText = 'Users: ' + users;
+
+            const storedSalesData = localStorage.getItem('salesData');
+            const salesData = storedSalesData ? JSON.parse(storedSalesData) : createSalesChartData();
+            initChart(salesData);
+        }
+
+        // 定期更新数据
+        setInterval(() => {
+            const newSalesData = createSalesChartData();
+            localStorage.setItem('salesData', JSON.stringify(newSalesData));
+            initChart(newSalesData);
+
+            const newUserCount = Math.floor(Math.random() * 10000);
+            console.log("new userCount="+newUserCount);
+
+            localStorage.setItem('userCount', newUserCount);
+            let uc = document.getElementById('userCount');
+            console.log("Element userCount ->"+uc);
+            console.log("the content is ->"+'Users: ' + newUserCount);
+            uc.innerText = 'Users: ' + newUserCount;
+        }, 5000);
+
+        // 页面加载时加载数据
+        document.addEventListener('DOMContentLoaded', loadData);
+
+        // // 加载数据并更新图表
+        // document.addEventListener('DOMContentLoaded', () => {
+        //     const salesData = updateData();
+        //     initChart(salesData);
+
+        //     每隔5秒更新用户数据
+        //     setInterval(() => {
+        //         updateData();
+        //     }, 5000);
+        // });
     </script>
 </body>
+
 </html>
