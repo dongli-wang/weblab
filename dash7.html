@@ -58,7 +58,7 @@
                     <!-- Card 3 -->
                     <div class="bg-white p-4 rounded-lg shadow">
                         <h4 class="font-semibold text-lg">Orders</h4>
-                        <p>1,320</p>
+                        <p id="orderCount">Loading...</p>
                     </div>
 
                     <!-- Card 4 -->
@@ -93,7 +93,7 @@
                 </div>
 
                 <!-- Table -->
-                <div class="bg-white p-4 rounded-lg shadow">
+                <div class="bg-white p-4 rounded-lg shadow mb-4">
                     <h4 class="font-semibold text-lg mb-2">Recent Orders</h4>
                     <table class="min-w-full">
                         <thead class="bg-gray-100">
@@ -104,16 +104,36 @@
                                 <th class="text-left py-2 px-4">Date</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td class="py-2 px-4">12345</td>
-                                <td class="py-2 px-4">Widget A</td>
-                                <td class="py-2 px-4">$200.00</td>
-                                <td class="py-2 px-4">2021-08-01</td>
-                            </tr>
-                            <!-- More rows... -->
+                        <tbody id="orderTableBody">
+                            <!-- Orders will be added dynamically using JavaScript -->
                         </tbody>
                     </table>
+                </div>
+
+                <!-- Create New Order Form -->
+                <div class="bg-white p-4 rounded-lg shadow mb-4">
+                    <h4 class="font-semibold text-lg mb-2">Create New Order</h4>
+                    <form id="createOrderForm">
+                        <div class="mb-4">
+                            <label for="productName" class="block text-sm font-medium text-gray-700">Product
+                                Name</label>
+                            <input type="text" id="productName" name="productName"
+                                class="border p-2 rounded w-full">
+                        </div>
+                        <div class="mb-4">
+                            <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
+                            <input type="number" id="amount" name="amount" class="border p-2 rounded w-full">
+                        </div>
+                        <div class="mb-4">
+                            <label for="orderDate" class="block text-sm font-medium text-gray-700">Order
+                                Date</label>
+                            <input type="date" id="orderDate" name="orderDate" class="border p-2 rounded w-full">
+                        </div>
+                        <button type="submit"
+                            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                            Create Order
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -122,10 +142,36 @@
     <script>
         let salesChart; // 全局变量来存储图表实例
 
+        // Function to add a new order to the table
+        function addOrderToTable(order) {
+            const tableBody = document.getElementById('orderTableBody');
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td class="py-2 px-4">${order.orderId}</td>
+                <td class="py-2 px-4">${order.product}</td>
+                <td class="py-2 px-4">${order.amount}</td>
+                <td class="py-2 px-4">${order.date}</td>
+            `;
+            tableBody.appendChild(row);
+        }
+
+        // Simulate new order creation and notification
+        function createNewOrder() {
+            const orderId = Math.floor(Math.random() * 100000);
+            const product = `Product ${Math.floor(Math.random() * 10)}`;
+            const amount = `$${(Math.random() * 500).toFixed(2)}`;
+            const date = new Date().toLocaleDateString();
+            const order = { orderId, product, amount, date };
+            addOrderToTable(order);
+
+            // Simulate a notification
+            alert(`New order created: Order ID ${orderId}`);
+        }
+
         // Mock 数据更新
         function createSalesChartData(selectedYear) {
-            const salesData = Array.from({ length: 6 },() => Math.floor(Math.random() * 20000));
-            localStorage.setItem(`salesData_${selectedYear}`,JSON.stringify(salesData));
+            const salesData = Array.from({ length: 6 }, () => Math.floor(Math.random() * 20000));
+            localStorage.setItem(`salesData_${selectedYear}`, JSON.stringify(salesData));
             return salesData;
         }
 
@@ -162,7 +208,7 @@
         }
 
         // 处理年份选择变化
-        document.getElementById('yearSelect').addEventListener('change', () => {
+        document.getElementById('yearSelect').addEventListener('change', function () {
             const selectedYear = parseInt(this.value);
             //Key conception: this -> 'yearSelect' Element/Object 
             // 从 localStorage 中获取选定年份的数据
@@ -186,6 +232,16 @@
 
         // 模拟数据的加载和更新
         function loadData() {
+            // Load existing orders from LocalStorage
+            const storedOrders = localStorage.getItem('orders');
+            const orders = storedOrders ? JSON.parse(storedOrders) : [];
+
+            // Display existing orders in the table
+            orders.forEach(order => addOrderToTable(order));
+
+            // Display the count of orders
+            document.getElementById('orderCount').innerText = 'Orders: ' + orders.length;
+
             const storedUsers = localStorage.getItem('userCount');
             const users = storedUsers ? parseInt(storedUsers) : Math.floor(Math.random() * 10000);
             document.getElementById('userCount').innerText = 'Users: ' + users;
@@ -221,6 +277,43 @@
             localStorage.setItem('userCount', newUserCount);
             document.getElementById('userCount').innerText = 'Users: ' + newUserCount;
         }, 5000);
+
+        // 处理创建订单的表单提交
+        document.getElementById('createOrderForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            // 获取表单字段的值
+            const productName = document.getElementById('productName').value;
+            const amount = document.getElementById('amount').value;
+            const orderDate = document.getElementById('orderDate').value;
+
+            // 创建订单对象 define a order object
+            const order = {
+                orderId: Math.floor(Math.random() * 100000),
+                product: productName,
+                amount: amount,
+                date: orderDate
+            };
+
+            // 将订单对象保存到LocalStorage
+            const orders = JSON.parse(localStorage.getItem('orders')) || [];
+            orders.push(order);
+            localStorage.setItem('orders', JSON.stringify(orders));
+
+            // 添加订单到表格
+            addOrderToTable(order);
+
+            // 更新订单计数
+            document.getElementById('orderCount').innerText = 'Orders: ' + orders.length;
+
+            // 清空表单字段
+            document.getElementById('productName').value = '';
+            document.getElementById('amount').value = '';
+            document.getElementById('orderDate').value = '';
+
+            // 提示订单创建成功
+            // alert('New order created: Order ID ' + order.orderId);
+        });
     </script>
 </body>
 
