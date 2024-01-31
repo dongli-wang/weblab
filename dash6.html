@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Dashboard with Tailwind CSS</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="bg-gray-100">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="w-1/5 bg-gray-800 text-white p-4">
+            <div class="flex items-center justify-center h-16">
+                <h1 class="text-lg font-semibold">Dashboard</h1>
+            </div>
+            <ul>
+                <li class="px-4 py-2 hover:bg-gray-700">
+                    <a href="#">Overview</a>
+                </li>
+                <li class="px-4 py-2 hover:bg-gray-700">
+                    <a href="#">Reports</a>
+                </li>
+                <li class="px-4 py-2 hover:bg-gray-700">
+                    <a href="#">Analytics</a>
+                </li>
+                <li class="px-4 py-2 hover:bg-gray-700">
+                    <a href="#">Settings</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main content -->
+        <div class="flex-1 flex flex-col overflow-y-auto">
+            <!-- Header -->
+            <div class="bg-white shadow p-4 flex justify-between items-center">
+                <h2 class="text-2xl font-semibold">Dashboard Overview</h2>
+            </div>
+
+            <!-- Content -->
+            <div class="p-4">
+                <!-- Statistics Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+                    <!-- Card 1 -->
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <h4 class="font-semibold text-lg">Sales</h4>
+                        <p>$15,000</p>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <h4 class="font-semibold text-lg">Active Users</h4>
+                        <p id="userCount">Loading...</p>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <h4 class="font-semibold text-lg">Orders</h4>
+                        <p>1,320</p>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <h4 class="font-semibold text-lg">Growth</h4>
+                        <p>3.4%</p>
+                    </div>
+                </div>
+
+                <!-- New Report Form -->
+                <div class="bg-white p-4 rounded-lg shadow mb-4">
+                    <h4 class="font-semibold text-lg mb-2">Create New Report</h4>
+                    <form id="newReportForm">
+                        <input type="text" id="reportName" placeholder="Report Name" class="border p-2 rounded mr-2">
+                        <button type="submit"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Create
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Chart Container -->
+                <div class="bg-white p-4 rounded-lg shadow mb-4">
+                    <h4 class="font-semibold text-lg mb-2">Yearly Sales</h4>
+                    <div class="flex items-center mb-4">
+                        <label class="text-sm mr-2">Select Year:</label>
+                        <select id="yearSelect" class="border p-2 rounded" title="year select">
+                            <!-- Options will be added dynamically using JavaScript -->
+                        </select>
+                    </div>
+                    <canvas id="salesChart" class="h-64"></canvas>
+                </div>
+
+                <!-- Table -->
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h4 class="font-semibold text-lg mb-2">Recent Orders</h4>
+                    <table class="min-w-full">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="text-left py-2 px-4">Order ID</th>
+                                <th class="text-left py-2 px-4">Product</th>
+                                <th class="text-left py-2 px-4">Amount</th>
+                                <th class="text-left py-2 px-4">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="py-2 px-4">12345</td>
+                                <td class="py-2 px-4">Widget A</td>
+                                <td class="py-2 px-4">$200.00</td>
+                                <td class="py-2 px-4">2021-08-01</td>
+                            </tr>
+                            <!-- More rows... -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let salesChart; // 全局变量来存储图表实例
+
+        // Mock 数据更新
+        function createSalesChartData(selectedYear) {
+            const salesData = Array.from({ length: 6 },() => Math.floor(Math.random() * 20000));
+            localStorage.setItem(`salesData_${selectedYear}`,JSON.stringify(salesData));
+            return salesData;
+        }
+
+        // 初始化图表
+        function initChart(salesData) {
+            const ctx = document.getElementById('salesChart').getContext('2d');
+
+            // 销毁已存在的图表实例
+            if (salesChart) {
+                salesChart.destroy();
+            }
+
+            // 创建新的图表实例
+            salesChart = new Chart(document.getElementById('salesChart'), {
+                type: 'bar',
+                data: {
+                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+                    datasets: [{
+                        label: 'Sales',
+                        data: salesData,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // 处理年份选择变化
+        document.getElementById('yearSelect').addEventListener('change', function () {
+            const selectedYear = parseInt(this.value);
+            //Key conception: this -> 'yearSelect' Element/Object 
+            // 从 localStorage 中获取选定年份的数据
+            const storedSalesData = localStorage.getItem(`salesData_${selectedYear}`);
+            const salesData = storedSalesData ? JSON.parse(storedSalesData) : createSalesChartData(selectedYear);
+            initChart(salesData);
+        });
+
+        // 处理新报告的创建
+        document.getElementById('newReportForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const reportName = document.getElementById('reportName').value;
+            if (reportName) {
+                // 在这里处理报告的创建逻辑
+                // 例如，保存到 localStorage
+                localStorage.setItem('newReport', reportName);
+                alert('New report created: ' + reportName);
+                document.getElementById('reportName').value = ''; // 清空输入框
+            }
+        });
+
+        // 模拟数据的加载和更新
+        function loadData() {
+            const storedUsers = localStorage.getItem('userCount');
+            const users = storedUsers ? parseInt(storedUsers) : Math.floor(Math.random() * 10000);
+            document.getElementById('userCount').innerText = 'Users: ' + users;
+
+            // 初始化年份选择下拉框,参数代表要显示的几年
+            updateYearSelect(5);
+
+            // 获取当前选定的年份并加载对应的数据
+            const selectedYear = parseInt(document.getElementById('yearSelect').value);
+            const storedSalesData = localStorage.getItem(`salesData_${selectedYear}`);
+            const salesData = storedSalesData ? JSON.parse(storedSalesData) : createSalesChartData(selectedYear);
+            initChart(salesData);
+        }
+
+        // 初始化年份选择下拉框 Initialize year selection dropdown
+        function updateYearSelect(num) {
+            const yearSelect = document.getElementById('yearSelect');
+            const currentYear = new Date().getFullYear();
+            for (let i = currentYear; i >= currentYear - num; i--) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                yearSelect.appendChild(option);
+            }
+        }
+
+        // 页面加载时加载数据 Load data when the page loads
+        document.addEventListener('DOMContentLoaded', loadData);
+
+        // 定期更新用户数据 Regularly update user data
+        setInterval(() => {
+            const newUserCount = Math.floor(Math.random() * 10000);
+            localStorage.setItem('userCount', newUserCount);
+            document.getElementById('userCount').innerText = 'Users: ' + newUserCount;
+        }, 5000);
+    </script>
+</body>
+
+</html>
