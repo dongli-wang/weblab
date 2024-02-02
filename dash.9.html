@@ -79,6 +79,13 @@
                         <h4 class="font-semibold text-lg">Growth</h4>
                         <p>3.4%</p>
                     </div>
+
+                    <!-- Card 5 -->
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <textarea title="some" class="px-1 ml-1 bg-white w-56" 
+                            id="linkToShare" >https://example.com/your/link&#10;https://example.com/your/link&#10;https://example.com/your/link</textarea>
+                        <button onclick="copyLinkToClipboard()" class="bg-blue-300 hover:bg-blue-500 text-white rounded mb-2 ml-2 px-0.5">Copy Link</button>
+                    </div>
                 </div>
 
                 <!-- New Report Form -->
@@ -106,60 +113,62 @@
                 </div>
 
                 <!-- Table -->
-                <div class="bg-white p-4 rounded-lg shadow mb-4">
+                <div class="flex bg-white p-4 rounded-lg shadow mb-4">
                     <h4 class="font-semibold text-lg mb-2">Recent Orders</h4>
-                    <table class="min-w-full">
-                        <thead class="bg-gray-100">
-                            <tr>
-                                <th class="text-left py-2 px-4">Order ID</th>
-                                <th class="text-left py-2 px-4">Product</th>
-                                <th class="text-left py-2 px-4">Amount</th>
-                                <th class="text-left py-2 px-4">Date</th>
-                            </tr>
-                        </thead>
-                        <tbody id="orderTableBody">
-                            <!-- Orders will be added dynamically using JavaScript -->
-                        </tbody>
-                    </table>
-                    <!-- Pagination -->
-                    <div class="mt-4 flex justify-center">
-                        <button id="prevPageBtn"
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2
-                               disabled:bg-slate-200 disabled:text-slate-500 disabled:cursor-not-allowed"
-                            disabled>Previous Page</button>
-                        <button id="nextPageBtn"
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded 
-                               disabled:bg-slate-50 disabled:text-slate-500 disabled:cursor-not-allowed">Next
-                            Page</button>
-                    </div>
+                    <button class="bg-blue-300 hover:bg-blue-500 text-white rounded mb-2 ml-2 px-0.5"
+                        onclick="exportTableToCSV('orders.csv')">Export to CSV</button>
                 </div>
 
-                <!-- Create New Order Form -->
-                <div class="bg-white p-4 rounded-lg shadow mb-4">
-                    <h4 class="font-semibold text-lg mb-2">Create New Order</h4>
-                    <form id="createOrderForm">
-                        <div class="mb-4">
-                            <label for="productName" class="block text-sm font-medium text-gray-700">Product
-                                Name</label>
-                            <input type="text" id="productName" name="productName" class="border p-2 rounded w-full">
-                        </div>
-                        <div class="mb-4">
-                            <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
-                            <input type="number" id="amount" name="amount" class="border p-2 rounded w-full">
-                        </div>
-                        <div class="mb-4">
-                            <label for="orderDate" class="block text-sm font-medium text-gray-700">Order
-                                Date</label>
-                            <input type="date" id="orderDate" name="orderDate" class="border p-2 rounded w-full">
-                        </div>
-                        <button type="submit"
-                            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                            Create Order
-                        </button>
-                    </form>
+                <table class="min-w-full">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="text-left py-2 px-4">Order ID</th>
+                            <th class="text-left py-2 px-4">Product</th>
+                            <th class="text-left py-2 px-4">Amount</th>
+                            <th class="text-left py-2 px-4">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orderTableBody">
+                        <!-- Orders will be added dynamically using JavaScript -->
+                    </tbody>
+                </table>
+                <!-- Pagination -->
+                <div class="mt-4 flex justify-center">
+                    <button id="prevPageBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2
+                               disabled:bg-slate-200 disabled:text-slate-500 disabled:cursor-not-allowed"
+                        disabled>Previous Page</button>
+                    <button id="nextPageBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded 
+                               disabled:bg-slate-50 disabled:text-slate-500 disabled:cursor-not-allowed">Next
+                        Page</button>
                 </div>
             </div>
+
+            <!-- Create New Order Form -->
+            <div class="bg-white p-4 rounded-lg shadow mb-4">
+                <h4 class="font-semibold text-lg mb-2">Create New Order</h4>
+                <form id="createOrderForm">
+                    <div class="mb-4">
+                        <label for="productName" class="block text-sm font-medium text-gray-700">Product
+                            Name</label>
+                        <input type="text" id="productName" name="productName" class="border p-2 rounded w-full">
+                    </div>
+                    <div class="mb-4">
+                        <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
+                        <input type="number" id="amount" name="amount" class="border p-2 rounded w-full">
+                    </div>
+                    <div class="mb-4">
+                        <label for="orderDate" class="block text-sm font-medium text-gray-700">Order
+                            Date</label>
+                        <input type="date" id="orderDate" name="orderDate" class="border p-2 rounded w-full">
+                    </div>
+                    <button type="submit"
+                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                        Create Order
+                    </button>
+                </form>
+            </div>
         </div>
+    </div>
     </div>
 
     <script>
@@ -375,8 +384,8 @@
             orders.push(order);
             localStorage.setItem('orders', JSON.stringify(orders));
 
-            // 添加订单到表格 No need to invoke this function when we add the pagination funtion
-            //addOrderToTable(order);
+            // 添加订单到表格
+            addOrderToTable(order);
 
             // 更新订单计数
             document.getElementById('orderCount').innerText = 'Orders: ' + orders.length;
@@ -392,6 +401,63 @@
             // 提示订单创建成功
             // alert('New order created: Order ID ' + order.orderId);
         });
+
+        function exportTableToCSV(filename) {
+            let csv = [];
+            let rows = document.querySelectorAll("table tr");
+
+            for (let i = 0; i < rows.length; i++) {
+                let row = [], cols = rows[i].querySelectorAll("td, th");
+
+                for (let j = 0; j < cols.length; j++)
+                    row.push(cols[j].innerText);
+
+                csv.push(row.join(","));
+            }
+
+            // Download CSV file
+            downloadCSV(csv.join("\n"), filename);
+        }
+
+        function downloadCSV(csv, filename) {
+            let csvFile;
+            let downloadLink;
+
+            // CSV FILE
+            csvFile = new Blob([csv], { type: "text/csv" });
+
+            // Download link
+            downloadLink = document.createElement("a");
+
+            // File name
+            downloadLink.download = filename;
+
+            // Create a link to the file
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+
+            // Hide download link
+            downloadLink.style.display = "none";
+
+            // Add the link to DOM
+            document.body.appendChild(downloadLink);
+
+            // Click download link
+            downloadLink.click();
+        }
+
+        function copyLinkToClipboard() {
+            let copyText = document.getElementById("linkToShare");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); /* For mobile devices */
+            document.execCommand("copy");
+
+            //alert("Copied the link: " + copyText.value);
+            //alert("Copied the link: " + copyText.value);
+            //alert("Copied the link: " + copyText.value);
+            //alert("Copied the link: " + copyText.value);
+            //alert("Copied the link: " + copyText.value);
+        }
+
     </script>
 </body>
 
